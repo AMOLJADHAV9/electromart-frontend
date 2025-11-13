@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
+
 export default function About() {
   return (
     <Layout>

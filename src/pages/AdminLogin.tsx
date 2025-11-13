@@ -3,6 +3,7 @@ import { ArrowRight, AlertCircle, CheckCircle, Shield } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth, login, register, logout } from "@/hooks/useAuth";
+import React from "react";
 
 export default function AdminLogin() {
   const [isLogin, setIsLogin] = useState(true);

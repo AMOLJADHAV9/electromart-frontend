@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { ShoppingCart, Heart, Star, Truck, Shield, RotateCcw } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { firebaseAPI } from "@/lib/api";
+import React from "react";
 
 interface Product {
   id: string;

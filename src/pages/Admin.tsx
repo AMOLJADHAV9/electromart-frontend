@@ -31,6 +31,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { firebaseAPI } from "@/lib/api";
+import React from "react";
 
 interface Product {
   id: string;

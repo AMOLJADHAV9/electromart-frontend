@@ -1,9 +1,11 @@
-import Layout from "@/components/Layout";
 import { ArrowRight, Search, Filter, X } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
 import { firebaseAPI } from "@/lib/api";
+import React from "react";
+
+import Layout from "../components/Layout";
 
 export default function Products() {
   const [products, setProducts] = useState<any[]>([]);

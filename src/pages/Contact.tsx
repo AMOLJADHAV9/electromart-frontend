@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import emailjs from "emailjs-com";
 import { useState } from "react";
+import React from "react";
 
 const isDev = import.meta.env.DEV;
 

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Upload, Plus, X } from "lucide-react";
 import { firebaseAPI } from "@/lib/api";
+import React from "react";
 
 interface FormData {
   name: string;

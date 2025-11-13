@@ -1,8 +1,9 @@
-import Layout from "@/components/Layout";
+import Layout from "../components/Layout";
 import { ArrowRight, AlertCircle, CheckCircle, Shield } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useAuth, login, register, logout } from "@/hooks/useAuth";
+import { useAuth, login, register, logout } from "../hooks/useAuth";
+import React from "react";
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);

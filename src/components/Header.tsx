@@ -3,6 +3,7 @@ import { ShoppingCart, Search, Menu, X, LogOut, User, ChevronDown } from "lucide
 import { useState, useEffect, useRef } from "react";
 import { useCart } from "@/contexts/CartContext";
 import { useAuth, logout } from "@/hooks/useAuth";
+import React from "react";
 import Logo from "@/components/Logo";
 
 export default function Header() {

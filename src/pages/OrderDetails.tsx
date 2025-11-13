@@ -17,6 +17,7 @@ import {
 import { generateInvoice } from "@/lib/invoice";
 import { useAuth } from "@/hooks/useAuth";
 import { firebaseAPI } from "@/lib/api";
+import React from "react";
 
 const isDev = import.meta.env.DEV;
 

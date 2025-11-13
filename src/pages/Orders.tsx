@@ -5,6 +5,7 @@ import { generateInvoice } from "@/lib/invoice";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { firebaseAPI } from "@/lib/api";
+import React from "react";
 
 interface Product {
   productId: string;

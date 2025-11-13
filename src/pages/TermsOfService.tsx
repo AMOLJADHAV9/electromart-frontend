@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import React from "react";
 
 export default function TermsOfService() {
   return (

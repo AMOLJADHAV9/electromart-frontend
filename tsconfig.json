@@ -26,19 +26,17 @@
     "strictNullChecks": false,
 
     /* Path mapping */
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["./client/*"],
+      "@/*": ["*"],
       "@shared/*": ["./shared/*"]
     }
   },
   "include": [
-    "client/**/*",
-    "client/svg.d.ts",
-    "server/**/*",
+    "src/**/*",
+    "src/svg.d.ts",
     "shared/**/*",
-    "vite.config.ts",
-    "vite.config.server.ts"
+    "vite.config.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

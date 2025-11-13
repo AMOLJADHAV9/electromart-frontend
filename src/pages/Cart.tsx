@@ -3,6 +3,7 @@ import { ArrowRight, ShoppingCart, Plus, Minus, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 import { useState } from "react";
+import React from "react";
 
 export default function Cart() {
   const { items, totalItems, totalAmount, shippingCharges, finalTotalAmount, removeFromCart, updateQuantity, checkout } = useCart();

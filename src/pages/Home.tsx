@@ -5,6 +5,7 @@ import ProductCard from "@/components/ProductCard";
 import CategoryCard from "@/components/CategoryCard";
 import { useState, useEffect } from "react";
 import { firebaseAPI } from "@/lib/api";
+import React from "react";
 
 interface Product {
   id: string;

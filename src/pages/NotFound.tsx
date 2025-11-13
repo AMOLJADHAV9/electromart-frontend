@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { ArrowRight } from "lucide-react";
+import React from "react";
 
 const NotFound = () => {
   const location = useLocation();
