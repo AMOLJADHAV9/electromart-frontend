@@ -1,0 +1,45 @@
+########################################
+# Frontend (Vite) environment variables
+########################################
+VITE_API_BASE_URL=https://your-backend-service.onrender.com/api
+VITE_FIREBASE_API_KEY=AIzaSyA3_HGq3qwaBwkHFjeZFfZSSP_ivksq3w8
+VITE_FIREBASE_AUTH_DOMAIN=electromart-78f5e.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=electromart-78f5e
+VITE_FIREBASE_STORAGE_BUCKET=electromart-78f5e.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=320819788206
+VITE_FIREBASE_APP_ID=1:123456789012:web:abcdefghijklmnopqrstuvwxyz
+VITE_FIREBASE_MEASUREMENT_ID=G-03VJH4P0HY
+VITE_RAZORPAY_KEY_ID=rzp_test_RcJXSwboq4VMab
+
+########################################
+# Backend (Express on Render) variables
+########################################
+PORT=3000
+NODE_ENV=production
+ALLOWED_ORIGINS=
+
+# Firebase Admin SDK (service account)
+FIREBASE_PROJECT_ID=electromart-78f5e
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-fbsvc@electromart-78f5e.iam.gserviceaccount.com
+# Escape newlines as \n or wrap in double quotes with literal newlines
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY_CONTENT\n-----END PRIVATE KEY-----\n"
+
+# Optional Firebase web config for server-side usage
+FIREBASE_API_KEY=AIzaSyA3_HGq3qwaBwkHFjeZFfZSSP_ivksq3w8
+FIREBASE_AUTH_DOMAIN=electromart-78f5e.firebaseapp.com
+FIREBASE_STORAGE_BUCKET=electromart-78f5e.firebasestorage.app
+FIREBASE_MESSAGING_SENDER_ID=320819788206
+FIREBASE_APP_ID=1:123456789012:web:abcdefghijklmnopqrstuvwxyz
+FIREBASE_MEASUREMENT_ID=G-03VJH4P0HY
+
+# Cloudinary configuration
+CLOUDINARY_CLOUD_NAME=ydsqgbqinh
+CLOUDINARY_API_KEY=526586153927245
+CLOUDINARY_API_SECRET=K4demT3hhxko5ZYSPmB08poS-No
+
+# Razorpay configuration
+RAZORPAY_KEY_ID=rzp_test_RcJXSwboq4VMab
+RAZORPAY_KEY_SECRET=w5vhbIuwA3JSmxgXVRg6hrBC
+
+# Optional: development proxy target for Vite dev server
+VITE_DEV_API_PROXY=http://localhost:3000

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectroMart - Your Electronics Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .redirect-message {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ElectroMart - Your Electronics Store</h1>
+        
+        <div class="redirect-message">
+            <p>If you're not redirected automatically, please visit our store:</p>
+            <a href="/ElectromartShop/">Go to ElectroMart Shop</a>
+        </div>
+        
+        <p>Welcome to ElectroMart, your one-stop shop for electronic components and gadgets!</p>
+        
+        <h2>About This Site</h2>
+        <p>This is the official website for ElectroMart, an e-commerce platform specializing in electronic components, Arduino boards, sensors, and tech gadgets.</p>
+        
+        <h2>Features</h2>
+        <ul>
+            <li>Browse and purchase electronic components</li>
+            <li>Secure payment processing</li>
+            <li>Order tracking</li>
+            <li>Invoice generation</li>
+        </ul>
+    </div>
+    
+    <script>
+        // Automatically redirect to the main app
+        setTimeout(() => {
+            window.location.href = '/ElectromartShop/';
+        }, 3000);
+    </script>
+</body>
+</html>
