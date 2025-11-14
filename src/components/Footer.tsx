@@ -13,8 +13,7 @@ export default function Footer() {
           {/* About Section */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Logo className="w-16 h-16" />
-              <h3 className="text-2xl font-bold">ElectroMart</h3>
+              <Logo className="w-32 h-16" />
             </div>
             <p className="text-gray-300 text-sm">
               Your one-stop electronics store for Arduino boards, sensors, modules and more.

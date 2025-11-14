@@ -6,6 +6,7 @@ import CategoryCard from "@/components/CategoryCard";
 import { useState, useEffect } from "react";
 import { firebaseAPI } from "@/lib/api";
 import React from "react";
+import heroImg from "@/assete/hero-img.png";
 
 interface Product {
   id: string;
@@ -254,7 +255,7 @@ export default function Home() {
             {/* Right Side - Hero Image */}
             <div className="hidden md:block">
               <img
-                src="https://www.innotronixlabs.com/wp-content/uploads/2023/09/closeup-electronic-circuit-board-with-cpu-microchip-electronic-components-background-1024x722.jpg"
+                src={heroImg}
                 alt="Electronics Store"
                 className="w-full rounded-lg shadow-2xl object-cover h-96"
               />

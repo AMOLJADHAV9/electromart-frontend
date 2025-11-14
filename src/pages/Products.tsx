@@ -68,6 +68,7 @@ export default function Products() {
   
     fetchProducts();
   }, []);
+
   
 
   // Filter products based on search term, category, and filters

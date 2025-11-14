@@ -84,16 +84,16 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-gray-900 border-b border-gray-700 sticky top-0 z-50">
+    <header className="bg-gray-900 border-b border-gray-700 sticky top-2 z-50">
       <div className="max-w-7xl mx-auto px-4">
         {/* Top Bar - Logo and Main Navigation */}
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <Logo className="w-16 h-16" />
-            <span className="text-2xl font-bold text-white hidden sm:inline">
+            <Logo className="w-32 h-16" />
+            {/* <span className="text-2xl font-bold text-white hidden sm:inline">
               ElectroMart
-            </span>
+            </span> */}
           </Link>
 
           {/* Desktop Navigation */}
@@ -103,6 +103,12 @@ export default function Header() {
               className="text-white hover:text-accent font-medium transition-colors"
             >
               Home
+            </Link>
+            <Link
+              to="/products"
+              className="text-white hover:text-accent font-medium transition-colors"
+            >
+              Products
             </Link>
           </nav>
 
@@ -223,23 +229,6 @@ export default function Header() {
 
         {/* Search Bar - Desktop */}
         <div className="hidden md:flex items-center gap-3 pb-4 relative" ref={searchRef}>
-          <form onSubmit={handleSearchSubmit} className="flex-1 flex items-center bg-gray-800 rounded-lg px-4 py-2">
-            <Search className="w-5 h-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search for part numbers (e.g., DHT11, Uno R3)..."
-              className="bg-transparent w-full ml-2 outline-none text-white placeholder-gray-400"
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-          </form>
-          <select className="px-4 py-2 bg-gray-800 rounded-lg text-white font-medium outline-none border border-gray-700">
-            <option className="bg-gray-800">All Categories</option>
-            <option className="bg-gray-800">Arduino</option>
-            <option className="bg-gray-800">Sensors</option>
-            <option className="bg-gray-800">Modules</option>
-            <option className="bg-gray-800">Robotics</option>
-          </select>
           
           {/* Search Suggestions Dropdown */}
           {showSearchResults && searchResults.length > 0 && (
