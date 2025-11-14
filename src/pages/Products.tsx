@@ -34,16 +34,15 @@ export default function Products() {
     const fetchProducts = async () => {
       try {
         const productsResponse = await firebaseAPI.getCollection("products");
-        
+  
         if (productsResponse.success) {
           const productsData = productsResponse.data.map((productData: any) => ({
             id: productData.id,
             name: productData.name,
             price: productData.price,
             category: productData.category,
-            image: productData.image || "https://images.pexels.com/photos/3568521/pexels-photo-3568521.jpeg", // Fallback image
-            // Map Firestore fields to ProductCard props
-            originalPrice: productData.price * 1.2, // Example: 20% higher original price
+            image: productData.image || "https://images.pexels.com/photos/3568521/pexels-photo-3568521.jpeg",
+            originalPrice: productData.price * 1.2,
             rating: productData.rating || 4.5,
             reviews: productData.sales || 0,
             description: productData.description || "",
@@ -51,66 +50,74 @@ export default function Products() {
             tax: productData.tax || 0,
             offer: productData.offer || undefined,
           }));
-          
+  
           setProducts(productsData);
           setFilteredProducts(productsData);
+  
+          // Workaround: if no products, wait 3 seconds before showing "No products"
+          if (productsData.length === 0) {
+            setFilteredProducts(null); // temporarily null to trigger "loading"
+            await delay(3000);
+            setFilteredProducts([]); // then set to empty array
+          }
         }
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
-
+  
     fetchProducts();
   }, []);
+  
 
   // Filter products based on search term, category, and filters
   useEffect(() => {
     let result = products;
-    
+
     // Text search
     if (searchTerm) {
-      result = result.filter(product => 
+      result = result.filter(product =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.category.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    
+
     // Category filter
     if (selectedCategory) {
-      result = result.filter(product => 
+      result = result.filter(product =>
         product.category === selectedCategory
       );
     }
-    
+
     // Compatibility filter
     if (filters.compatibility.length > 0) {
-      result = result.filter(product => 
-        filters.compatibility.some(comp => 
+      result = result.filter(product =>
+        filters.compatibility.some(comp =>
           product.name.toLowerCase().includes(comp.toLowerCase()) ||
           product.description?.toLowerCase().includes(comp.toLowerCase())
         )
       );
     }
-    
+
     // Function filter
     if (filters.function.length > 0) {
-      result = result.filter(product => 
-        filters.function.some(func => 
+      result = result.filter(product =>
+        filters.function.some(func =>
           product.name.toLowerCase().includes(func.toLowerCase()) ||
           product.description?.toLowerCase().includes(func.toLowerCase())
         )
       );
     }
-    
+
     // Brand filter
     if (filters.brand.length > 0) {
-      result = result.filter(product => 
-        filters.brand.some(brand => 
+      result = result.filter(product =>
+        filters.brand.some(brand =>
           product.name.toLowerCase().includes(brand.toLowerCase())
         )
       );
     }
-    
+
     // Price range filter
     if (filters.priceRange) {
       const [min, max] = filters.priceRange.split("-").map(Number);
@@ -122,7 +129,7 @@ export default function Products() {
         }
       });
     }
-    
+
     setFilteredProducts(result);
   }, [searchTerm, selectedCategory, filters, products]);
 
@@ -145,19 +152,22 @@ export default function Products() {
     setFilters(prev => {
       const currentValues = [...prev[filterType]];
       const index = currentValues.indexOf(value);
-      
+
       if (index >= 0) {
         currentValues.splice(index, 1);
       } else {
         currentValues.push(value);
       }
-      
+
       return {
         ...prev,
         [filterType]: currentValues
       };
     });
   };
+
+  // utils/delay.ts
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
   // Clear all filters
   const clearFilters = () => {
@@ -191,7 +201,7 @@ export default function Products() {
               <div className="bg-gray-800 rounded-xl shadow-lg p-6 sticky top-24">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-xl font-bold text-white">Filters</h2>
-                  <button 
+                  <button
                     onClick={clearFilters}
                     className="text-sm text-accent hover:text-yellow-300"
                   >
@@ -326,7 +336,7 @@ export default function Products() {
                   <div className="absolute right-0 top-0 bottom-0 w-80 bg-gray-800 p-6 overflow-y-auto">
                     <div className="flex items-center justify-between mb-6">
                       <h2 className="text-xl font-bold text-white">Filters</h2>
-                      <button 
+                      <button
                         onClick={() => setShowFilters(false)}
                         className="p-2 hover:bg-gray-700 rounded-lg"
                       >
@@ -469,8 +479,8 @@ export default function Products() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
-                
-                <select 
+
+                <select
                   className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white font-medium outline-none"
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
@@ -484,32 +494,34 @@ export default function Products() {
                 </select>
               </div>
 
-              {/* Products Grid */}
-              {filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {filteredProducts.map((product) => (
-                    <ProductCard key={product.id} {...product} />
-                  ))}
-                </div>
-              ) : (
-                <div className="bg-gray-800 rounded-xl shadow-lg p-12 text-center">
-                  <div className="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span className="text-4xl">🔍</span>
-                  </div>
-                  <h2 className="text-2xl font-bold text-white mb-4">
-                    No products found
-                  </h2>
-                  <p className="text-gray-400 mb-8">
-                    Try adjusting your search or filter criteria
-                  </p>
-                  <button 
-                    onClick={clearFilters}
-                    className="inline-flex items-center gap-2 bg-accent text-black font-bold py-3 px-8 rounded-lg hover:bg-yellow-300 transition-all duration-300 hover:shadow-lg active:scale-95"
-                  >
-                    Clear Filters
-                  </button>
-                </div>
-              )}
+              {filteredProducts === null ? (
+  <div className="text-center text-gray-400">Loading products...</div>
+) : filteredProducts.length > 0 ? (
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    {filteredProducts.map((product) => (
+      <ProductCard key={product.id} {...product} />
+    ))}
+  </div>
+) : (
+  <div className="bg-gray-800 rounded-xl shadow-lg p-12 text-center">
+    <div className="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+      <span className="text-4xl">🔍</span>
+    </div>
+    <h2 className="text-2xl font-bold text-white mb-4">
+      No products found
+    </h2>
+    <p className="text-gray-400 mb-8">
+      Try adjusting your search or filter criteria
+    </p>
+    <button 
+      onClick={clearFilters}
+      className="inline-flex items-center gap-2 bg-accent text-black font-bold py-3 px-8 rounded-lg hover:bg-yellow-300 transition-all duration-300 hover:shadow-lg active:scale-95"
+    >
+      Clear Filters
+    </button>
+  </div>
+)}
+
 
               {/* Back to Home */}
               <div className="mt-8 text-center">
