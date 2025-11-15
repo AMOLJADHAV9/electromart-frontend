@@ -1,7 +1,9 @@
 import Layout from "@/components/Layout";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-
+import ArdImg from "@/assete/Arduino316.jpg";
+import rasImg from "@/assete/rasberrypi.jpg"
+import elecImg from "@/assete/electronic sensors.jpg"
 
 export default function About() {
   return (
@@ -39,9 +41,9 @@ export default function About() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
                   <div className="rounded-lg overflow-hidden shadow-lg">
                     <img 
-                      src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&h=400&q=80" 
+                      src={ArdImg}
                       alt="Arduino Boards" 
-                      className="w-full h-48 object-cover"
+                      className="w-full h-48 object-fill"
                     />
                     <div className="bg-gray-700 p-4">
                       <h3 className="text-white font-bold text-center">Arduino Boards</h3>
@@ -49,9 +51,9 @@ export default function About() {
                   </div>
                   <div className="rounded-lg overflow-hidden shadow-lg">
                     <img 
-                      src="https://images.unsplash.com/photo-1592827570540-f93b8ac4b63b?auto=format&fit=crop&w=600&h=400&q=80" 
+                      src={rasImg}
                       alt="Raspberry Pi Kits" 
-                      className="w-full h-48 object-cover"
+                      className="w-full h-48 object-fill"
                     />
                     <div className="bg-gray-700 p-4">
                       <h3 className="text-white font-bold text-center">Raspberry Pi Kits</h3>
@@ -59,7 +61,7 @@ export default function About() {
                   </div>
                   <div className="rounded-lg overflow-hidden shadow-lg">
                     <img 
-                      src="https://images.unsplash.com/photo-1555404511-5a91586b7113?auto=format&fit=crop&w=600&h=400&q=80" 
+                      src={elecImg} 
                       alt="Electronic Sensors" 
                       className="w-full h-48 object-cover"
                     />

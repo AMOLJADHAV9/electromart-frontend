@@ -77,7 +77,7 @@ export default function RefundPolicy() {
                   <h3 className="text-2xl font-bold text-white mb-4">7. Contact</h3>
                   <ul className="list-none text-gray-300 mb-6 space-y-2">
                     <li><strong>📧</strong> <a href="mailto:support@electromart.in" className="text-accent hover:underline">support@electromart.in</a></li>
-                    <li><strong>📞</strong> +91-XXXXXXXXXX</li>
+                    <li><strong>📞</strong> +91-9552678123</li>
                   </ul>
 
                   <div className="bg-gray-700 p-6 rounded-lg mt-8">
