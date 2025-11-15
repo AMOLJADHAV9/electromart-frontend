@@ -11,6 +11,7 @@ import {
   TrendingUp,
   DollarSign,
   Grid,
+  Truck,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import {
@@ -29,7 +30,7 @@ import {
   Cell,
 } from "recharts";
 import { useAuth } from "@/hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { firebaseAPI } from "@/lib/api";
 import React from "react";
 
@@ -57,11 +58,15 @@ interface User {
   id: string;
   name: string;
   email: string;
+  phone?: string;
+  vehicleType?: string;
+  licenseNumber?: string;
   joinDate: string;
   totalOrders: number;
   totalSpent: number;
   calculatedOrders?: number; // Actual count from orders
   calculatedTotalSpent?: number; // Actual sum from paid orders
+  role?: "user" | "admin" | "delivery"; // Add role property
 }
 
 interface DeliveryAddress {
@@ -174,11 +179,15 @@ export default function Admin() {
             id: userData.id,
             name: userData.displayName || userData.name || "Unknown User",
             email: userData.email,
+            phone: userData.phone || "",
+            vehicleType: userData.vehicleType || "",
+            licenseNumber: userData.licenseNumber || "",
             joinDate: userData.createdAt ? new Date(userData.createdAt).toLocaleDateString() : "N/A",
             totalOrders: userData.totalOrders || 0,
             totalSpent: userData.totalSpent || 0,
             calculatedOrders: 0, // Will be calculated from orders
             calculatedTotalSpent: 0, // Will be calculated from orders
+            role: userData.role || "user"
           }));
           
           setUsers(usersData);
@@ -409,6 +418,25 @@ export default function Admin() {
     } catch (error) {
       console.error("Error updating order status:", error);
       alert("Failed to update order status. Please try again.");
+    }
+  };
+
+  // Update user role
+  const updateUserRole = async (userId: string, newRole: "user" | "admin" | "delivery") => {
+    try {
+      await firebaseAPI.updateDocument("users", userId, {
+        role: newRole
+      });
+      
+      // Update local state
+      setUsers(users.map(user => 
+        user.id === userId ? { ...user, role: newRole } : user
+      ));
+      
+      alert(`User role updated to ${newRole}`);
+    } catch (error) {
+      console.error("Error updating user role:", error);
+      alert("Failed to update user role. Please try again.");
     }
   };
 
@@ -757,67 +785,16 @@ export default function Admin() {
             <div className="p-6">
               {activeTab === "dashboard" && (
                 <div>
-                  <h2 className="text-xl font-bold text-white mb-6">Dashboard Overview</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="bg-gray-700 rounded-lg p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-semibold text-white">Quick Stats</h3>
-                        <TrendingUp className="w-6 h-6 text-green-400" />
-                      </div>
-                      <div className="space-y-3">
-                        <div className="flex justify-between">
-                          <span className="text-gray-300">Today's Revenue</span>
-                          <span className="text-white font-medium">
-                            ₹{todayRevenue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
-                          </span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-300">This Month</span>
-                          <span className="text-white font-medium">
-                            ₹{thisMonthRevenue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
-                          </span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-300">Pending Orders</span>
-                          <span className="text-white font-medium">
-                            {orders.filter(order => order.orderStatus !== 'DELIVERED' && order.paymentStatus === 'PAID').length}
-                          </span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-300">Total Customers</span>
-                          <span className="text-white font-medium">{users.length}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-gray-700 rounded-lg p-6 md:col-span-2">
-                      <h3 className="text-lg font-semibold text-white mb-4">Recent Activity</h3>
-                      <div className="space-y-4">
-                        {orders
-                          .filter(order => order.paymentStatus === "PAID")
-                          .sort((a, b) => {
-                            const dateA = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : new Date(a.createdAt).getTime();
-                            const dateB = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : new Date(b.createdAt).getTime();
-                            return dateB - dateA;
-                          })
-                          .slice(0, 4)
-                          .map((order) => (
-                          <div key={order.id} className="flex items-center justify-between py-2 border-b border-gray-600 last:border-0">
-                            <div>
-                              <p className="text-white">Paid order #{order.id.slice(0, 8)}</p>
-                              <p className="text-gray-400 text-sm">
-                                {order.createdAt ? 
-                                  (order.createdAt.toDate ? 
-                                    order.createdAt.toDate().toLocaleString() : 
-                                    new Date(order.createdAt).toLocaleString()) : 
-                                  'Unknown date'}
-                              </p>
-                            </div>
-                            <span className="text-green-400 font-medium">₹{order.totalAmount ? order.totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 }) : '0.00'}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                  <div className="bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
+                    <h3 className="text-lg font-bold text-white mb-4">Delivery Management</h3>
+                    <p className="text-gray-400 mb-4">Register new delivery boys for your e-commerce platform</p>
+                    <Link 
+                      to="/admin/register-delivery-boy"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-accent text-black rounded-lg font-medium hover:bg-yellow-300 transition-colors"
+                    >
+                      <Truck className="w-4 h-4" />
+                      Register New Delivery Boy
+                    </Link>
                   </div>
                 </div>
               )}
@@ -1086,6 +1063,82 @@ export default function Admin() {
                               <button className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors">
                                 <Eye className="w-4 h-4" />
                               </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "users" && (
+                <div>
+                  <h2 className="text-xl font-bold text-white mb-6">User Management</h2>
+                  <div className="bg-gray-800 rounded-lg shadow-lg overflow-x-auto">
+                    <table className="w-full text-left text-gray-300">
+                      <thead className="bg-gray-700 text-white">
+                        <tr>
+                          <th className="px-6 py-4 font-bold">User ID</th>
+                          <th className="px-6 py-4 font-bold">Name</th>
+                          <th className="px-6 py-4 font-bold">Email</th>
+                          <th className="px-6 py-4 font-bold">Phone</th>
+                          <th className="px-6 py-4 font-bold">Join Date</th>
+                          <th className="px-6 py-4 font-bold">Orders</th>
+                          <th className="px-6 py-4 font-bold">Total Spent</th>
+                          <th className="px-6 py-4 font-bold">Role</th>
+                          <th className="px-6 py-4 font-bold">Vehicle/License</th>
+                          <th className="px-6 py-4 font-bold">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {users.map((user) => (
+                          <tr
+                            key={user.id}
+                            className="border-t border-gray-700 hover:bg-gray-700 transition-colors"
+                          >
+                            <td className="px-6 py-4 font-mono text-sm">#{user.id.slice(0, 8)}</td>
+                            <td className="px-6 py-4 font-semibold">{user.name}</td>
+                            <td className="px-6 py-4 break-all max-w-xs">{user.email}</td>
+                            <td className="px-6 py-4">{user.phone || "N/A"}</td>
+                            <td className="px-6 py-4">{user.joinDate}</td>
+                            <td className="px-6 py-4">{user.calculatedOrders || user.totalOrders}</td>
+                            <td className="px-6 py-4">
+                              ₹{((user.calculatedTotalSpent || user.totalSpent) / 100).toFixed(2)}
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                user.role === "admin" 
+                                  ? "bg-purple-900/30 text-purple-400"
+                                  : user.role === "delivery"
+                                  ? "bg-blue-900/30 text-blue-400"
+                                  : "bg-green-900/30 text-green-400"
+                              }`}>
+                                {user.role || "user"}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4">
+                              {user.role === "delivery" ? (
+                                <div>
+                                  <div className="text-sm">{user.vehicleType || "N/A"}</div>
+                                  <div className="text-xs text-gray-400">{user.licenseNumber || "No License"}</div>
+                                </div>
+                              ) : (
+                                <span className="text-gray-400 text-sm">N/A</span>
+                              )}
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex gap-2">
+                                <select
+                                  value={user.role || "user"}
+                                  onChange={(e) => updateUserRole(user.id, e.target.value as "user" | "admin" | "delivery")}
+                                  className="bg-gray-700 text-white rounded px-2 py-1 text-sm"
+                                >
+                                  <option value="user">User</option>
+                                  <option value="admin">Admin</option>
+                                  <option value="delivery">Delivery</option>
+                                </select>
+                              </div>
                             </td>
                           </tr>
                         ))}

@@ -24,9 +24,12 @@ import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RefundPolicy from "./pages/RefundPolicy";
 import ShippingPolicy from "./pages/ShippingPolicy";
+import DeliveryBoyLogin from "./pages/DeliveryBoyLogin";
+import DeliveryBoy from "./pages/DeliveryBoy";
+import DeliveryBoyRegister from "./pages/DeliveryBoyRegister";
 
 // Protected Route Components
-const ProtectedRoute = ({ children, requiredRole }: { children: JSX.Element; requiredRole?: "user" | "admin" }) => {
+const ProtectedRoute = ({ children, requiredRole }: { children: JSX.Element; requiredRole?: "user" | "admin" | "delivery" }) => {
   const { currentUser, loading } = useAuth();
 
   if (loading) {
@@ -35,7 +38,7 @@ const ProtectedRoute = ({ children, requiredRole }: { children: JSX.Element; req
 
   if (!currentUser) {
     // Redirect to appropriate login page based on required role
-    return <Navigate to={requiredRole === "admin" ? "/admin-login" : "/login"} replace />;
+    return <Navigate to={requiredRole === "admin" ? "/admin-login" : requiredRole === "delivery" ? "/delivery-boy-login" : "/login"} replace />;
   }
 
   // If no specific role is required, allow access
@@ -46,7 +49,7 @@ const ProtectedRoute = ({ children, requiredRole }: { children: JSX.Element; req
   // Check if user has the required role
   if (currentUser.role !== requiredRole) {
     // Redirect to appropriate dashboard
-    return <Navigate to={requiredRole === "admin" ? "/admin-login" : "/"} replace />;
+    return <Navigate to={requiredRole === "admin" ? "/admin-login" : requiredRole === "delivery" ? "/delivery-boy-login" : "/"} replace />;
   }
 
   return children;
@@ -58,6 +61,10 @@ const AdminRoute = ({ children }: { children: JSX.Element }) => (
 
 const UserRoute = ({ children }: { children: JSX.Element }) => (
   <ProtectedRoute requiredRole="user">{children}</ProtectedRoute>
+);
+
+const DeliveryBoyRoute = ({ children }: { children: JSX.Element }) => (
+  <ProtectedRoute requiredRole="delivery">{children}</ProtectedRoute>
 );
 
 const queryClient = new QueryClient();
@@ -83,6 +90,7 @@ export default function App() {
               <Route path="/shipping" element={<ShippingPolicy />} />
               <Route path="/login" element={<Login />} />
               <Route path="/admin-login" element={<AdminLogin />} />
+              <Route path="/delivery-boy-login" element={<DeliveryBoyLogin />} />
               <Route 
                 path="/admin" 
                 element={
@@ -97,6 +105,22 @@ export default function App() {
                   <AdminRoute>
                     <AddProduct />
                   </AdminRoute>
+                } 
+              />
+              <Route 
+                path="/admin/register-delivery-boy" 
+                element={
+                  <AdminRoute>
+                    <DeliveryBoyRegister />
+                  </AdminRoute>
+                } 
+              />
+              <Route 
+                path="/delivery-boy" 
+                element={
+                  <DeliveryBoyRoute>
+                    <DeliveryBoy />
+                  </DeliveryBoyRoute>
                 } 
               />
               <Route 

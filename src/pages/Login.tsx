@@ -1,5 +1,5 @@
 import Layout from "../components/Layout";
-import { ArrowRight, AlertCircle, CheckCircle, Shield } from "lucide-react";
+import { ArrowRight, AlertCircle, CheckCircle, Shield, Truck } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth, login, register, logout } from "../hooks/useAuth";
@@ -292,13 +292,7 @@ export default function Login() {
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => navigate("/")}
-                  className="w-full border-2 border-gray-700 text-white font-bold py-2 rounded-lg hover:bg-gray-700 transition-colors"
-                >
-                  Continue as Guest
-                </button>
+               
               </form>
             ) : (
               /* Register Form */
@@ -376,6 +370,14 @@ export default function Login() {
               >
                 Admin Login
                 <Shield className="w-4 h-4" />
+              </Link>
+              <div className="text-gray-400">or</div>
+              <Link
+                to="/delivery-boy-login"
+                className="inline-flex items-center gap-2 text-accent hover:text-yellow-300 font-semibold transition-colors"
+              >
+                Delivery Boy Login
+                <Truck className="w-4 h-4" />
               </Link>
             </div>
           </div>

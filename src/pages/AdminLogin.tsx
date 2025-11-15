@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout";
-import { ArrowRight, AlertCircle, CheckCircle, Shield } from "lucide-react";
+import { ArrowRight, AlertCircle, CheckCircle, Shield, Truck } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth, login, register, logout } from "@/hooks/useAuth";
@@ -178,6 +178,15 @@ export default function AdminLogin() {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
+              <div className="mt-4 text-center">
+                <Link
+                  to="/admin/register-delivery-boy"
+                  className="inline-flex items-center gap-2 text-accent hover:text-yellow-300 font-semibold transition-colors"
+                >
+                  Register New Delivery Boy
+                  <Truck className="w-4 h-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -230,7 +239,7 @@ export default function AdminLogin() {
               >
                 Admin Login
               </button>
-              <button
+              {/* <button
                 onClick={() => {
                   setIsLogin(false);
                   setError("");
@@ -243,7 +252,7 @@ export default function AdminLogin() {
                 }`}
               >
                 Admin Register
-              </button>
+              </button> */}
             </div>
 
             {/* Login Form */}

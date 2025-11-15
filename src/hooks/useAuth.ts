@@ -13,7 +13,7 @@ export interface User {
   uid: string;
   email: string | null;
   displayName: string | null;
-  role?: "user" | "admin";
+  role?: "user" | "admin" | "delivery";
 }
 
 export const useAuth = () => {
@@ -83,7 +83,7 @@ export const login = async (email: string, password: string) => {
 };
 
 // Register function
-export const register = async (email: string, password: string, role: "user" | "admin" = "user") => {
+export const register = async (email: string, password: string, role: "user" | "admin" | "delivery" = "user") => {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const user = userCredential.user;
   
